@@ -48,6 +48,12 @@ class TestRemoveDups(unittest.TestCase):
             assert self.linked.getFromEndRec(counter).val == i
             counter += 1
 
+    def testGetFromEndPointers(self):
+        counter = 0
+        for i in reversed(self.vals):
+            assert self.linked.getFromEndPointers(counter).val == i
+            counter += 1
+
 
 if __name__ == "__main__":
     unittest.main()

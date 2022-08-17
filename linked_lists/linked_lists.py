@@ -1,5 +1,6 @@
 # How to remove all duplicates in a linked list
 
+from ctypes import pointer
 from operator import index
 
 
@@ -156,7 +157,16 @@ class LinkedList:
         params[0] -= 1
         return curr # Not right index
 
+    def getFromEndPointers(self, index):
+        p1 = self.head
+        p2 = p1
+        for _ in range(index+1):
+            p2 = p2.next
+        while p2:
+            p2 = p2.next
+            p1 = p1.next
 
+        return p1
 
     def vals(self) -> list:
         """
