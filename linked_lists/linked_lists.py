@@ -168,6 +168,11 @@ class LinkedList:
 
         return p1
 
+    def delMiddleNode(self,node):
+        p2 = node.next
+        node.next = p2.next
+        node.val = p2.val
+
     def vals(self) -> list:
         """
         """
