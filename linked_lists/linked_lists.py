@@ -173,6 +173,74 @@ class LinkedList:
         node.next = p2.next
         node.val = p2.val
 
+    def partition(self, par):
+        #Loop through the list
+        node = self.head
+        while node:
+            #For each node less than par
+            if node.val < par:
+                #add to head
+                self.addToHead(node.val)
+                #And delete original
+                self.deleteNode(node)
+            node = node.next
+
+    def sumLists(self, L2):
+        num = str(self.sum() + L2.sum())
+        result = LinkedList()
+        for char in num:
+            result.addToHead(char)
+
+        return result
+
+    def sumListsRec(self, L2, reversed=False):
+        if reversed:
+            result = LinkedList()
+            rem = self.sumListsRealRev(self.head, L2.head, result, 0)
+            if rem:
+                result.addToHead(rem)
+            return result
+        return self.sumListsReal(self.head, L2.head, LinkedList(), 0)
+
+    def sumListsRealRev(self, node1, node2, result, rem):
+        #First go till bottom
+        if node1 is None or node2 is None:
+            return 0
+        #Add the bottom two terms
+        rem = self.sumListsRealRev(node1.next, node2.next, result, 0)
+        #Return any remainder
+        print(rem)
+        num = node1.val + node2.val + rem
+        rem = num//10
+        num = num%10
+        result.addToHead(num)
+        print(num, result)
+        return rem
+
+
+    def sumListsReal(self, node1, node2, result, rem):
+        if node1 is None or node2 is None:
+            if rem:
+                result.addToTail(rem)
+            return result
+        #For each node
+        num = node1.val + node2.val + rem
+        rem = num//10
+        num = num%10
+        result.addToTail(num)
+        return self.sumListsReal(node1.next, node2.next, result, rem)
+
+    def sum(self, forward=False):
+        """Returns the number the list makes in reverse"""
+        if forward is False:
+            vals = reversed(self.vals())
+        else:
+            vals = self.vals()
+        result = []
+        for i in vals:
+            result.append(str(i))
+        return int("".join(result))
+
     def vals(self) -> list:
         """
         """
@@ -184,13 +252,7 @@ class LinkedList:
         return result
 
     def __str__(self):
-        result = []
-        node = self.head
-        while node:
-            result.append(node.val)
-            node = node.next
-
-        return str(result)
+        return str(self.vals())
 
 
 
